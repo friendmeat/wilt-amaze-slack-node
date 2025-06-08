@@ -2,6 +2,8 @@
 from typing import Optional, Self, Any
 from dataclasses import dataclass, field
 
+from tree import exceptions
+
 # T = TypeVar("T", bound="Node")
 
 
@@ -87,7 +89,9 @@ class Node[T: "Node"]:
         """
 
         def search_parent(current_node: T | Self, node: T) -> bool:
-            next_parent = current_node.parent
+            next_parent = (
+                current_node.parent if hasattr(current_node, "parent") else None
+            )
             if next_parent:
                 if next_parent == node:
                     return True
@@ -101,8 +105,39 @@ class Node[T: "Node"]:
         """`True` if the node has no children"""
         return len(self.children) == 0
 
-    def insert(self, node: T) -> None:
+    def insert(self, node: T, deracinate=False) -> None:
+        """Insert a child node
+
+        :param node: Node The node to insert as a child of the calling node.
+        :param deracinate: bool If node already has a parent, overwrite the parent property.
+        :raises: CircularError
+        Restrictions:
+
+            1. A node cannot be a child of itself
+            2. A node cannot be a parent to an ancestor node
+            3. A node cannot have two parents
+            4. Cannot insert the same node twice
+            5. A node cannot be an ancestor to a sibling
+        """
         if not isinstance(node, type(self)):
             raise TypeError
+
+        if self == node:
+            raise exceptions.CircularError()
+
+        # Node cannot already be a descendant
+        if self.has_descendant(node):  # type: ignore
+            raise exceptions.CircularError()
+
+        # Node cannot be an ancestor
+        if self.has_ancestor(node):  # type: ignore
+            raise exceptions.CircularError()
+
+        if hasattr(node, "parent") and node.parent is not None:
+            if not deracinate:
+                raise exceptions.InsertError(
+                    message="Cannot overwrite parent on node: `deracinate` is `False`"
+                )
+
         node.parent = self  # type: ignore
         self.children.append(node)  # type: ignore
