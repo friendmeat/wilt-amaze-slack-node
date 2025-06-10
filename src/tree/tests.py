@@ -51,6 +51,18 @@ class TestNodeTree(unittest.TestCase):
     def test_leaf_is_descendant_of_self(self):
         self.assertTrue(self.leaf1.has_descendant(self.leaf1))
 
+    def test_siblings_in_subtree(self):
+        self.assertTrue(self.leaf1.is_sibling_of(self.leaf2))
+
+    def test_not_siblings_nodes_in_different_subtrees(self):
+        self.assertFalse(self.leaf1.is_sibling_of(self.leaf4))
+
+    def test_not_siblings_parent_and_child(self):
+        self.assertFalse(self.leaf1.is_sibling_of(self.stem1))
+
+    def test_not_siblings_node_and_self(self):
+        self.assertFalse(self.leaf1.is_sibling_of(self.leaf1))
+
 class TestCircular(unittest.TestCase):
     def setUp(self) -> None:
         self.root = Node('a')

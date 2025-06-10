@@ -100,10 +100,27 @@ class Node[T: "Node"]:
 
         return search_parent(self, node)
 
+    def is_sibling_of(self, node:T)->bool:
+        """`True` if caller and node share a parent
+        :param node: T
+        """
+        # Always false if:
+        # - either node is root
+        # - self is node 
+        if self == node or self.is_root or node.is_root:
+            return False
+
+        return self.parent == node.parent
+
     @property
     def is_leaf(self) -> bool:
         """`True` if the node has no children"""
         return len(self.children) == 0
+
+    @property
+    def is_root(self)->bool:
+        """`True` if node has no parent"""
+        return not hasattr(self, "parent")
 
     def insert(self, node: T, deracinate=False) -> None:
         """Insert a child node
