@@ -6,20 +6,20 @@ class TestNodeTree(unittest.TestCase):
     def setUp(self) -> None:
         self.tree = Node(data="a")
 
-        self.subtree1 = Node("b")
+        self.stem1 = Node("b")
         self.leaf1 = Node("c")
         self.leaf2 = Node("d")
-        self.subtree1.insert(self.leaf1)
-        self.subtree1.insert(self.leaf2)
+        self.stem1.insert(self.leaf1)
+        self.stem1.insert(self.leaf2)
 
-        self.subtree2 = Node("e")
+        self.stem2 = Node("e")
         self.leaf3 = Node("f")
         self.leaf4 = Node("g")
-        self.subtree2.insert(self.leaf3)
-        self.subtree2.insert(self.leaf4)
+        self.stem2.insert(self.leaf3)
+        self.stem2.insert(self.leaf4)
 
-        self.tree.insert(self.subtree1)
-        self.tree.insert(self.subtree2)
+        self.tree.insert(self.stem1)
+        self.tree.insert(self.stem2)
 
         return super().setUp()
 
