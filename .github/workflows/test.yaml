@@ -10,7 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup UV
-        uses: astral-sh/setup-uv@6
+        uses: astral-sh/setup-uv@v6
         with:
           python-version: 3.13
           version: latest
