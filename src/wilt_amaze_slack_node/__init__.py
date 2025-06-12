@@ -2,7 +2,7 @@
 from typing import Optional, Self, Any
 from dataclasses import dataclass, field
 
-from tree import exceptions
+from wilt_amaze_slack_node import exceptions
 
 # T = TypeVar("T", bound="Node")
 
