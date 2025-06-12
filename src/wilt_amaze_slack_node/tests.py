@@ -1,4 +1,4 @@
-from tree import Node, exceptions
+from wilt_amaze_slack_node import Node, exceptions
 import unittest
 
 
