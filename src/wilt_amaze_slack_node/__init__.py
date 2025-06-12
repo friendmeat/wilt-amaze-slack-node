@@ -28,7 +28,7 @@ class Node[T: "Node"]:
     data: Optional[Any] = field(init=True, default=None)
     """Arbitrary data stored in the node"""
 
-    parent: Optional[T] = field(init=False)
+    parent: Optional[T] = field(init=True, default=None)
     """The immediate predecessor in the tree. `None` if node is the tree root"""
 
     children: list[T] = field(init=False, default_factory=list)
