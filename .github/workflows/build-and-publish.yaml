@@ -8,6 +8,9 @@ on:
         required: true
         default: 'main'
 
+  release:
+    
+
 jobs:
   build:
     runs-on: ubuntu-latest
